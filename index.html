@@ -9,22 +9,23 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
         integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./src/styles.css">
 </head>
 
 <body>
     <div class="navbar">
-        <h1>Logo</h1>
-
+        <h1><a href="/">Logo</a></h1>
         <div class="cart" title="Working on it">
-            <!-- Still working with this litle guy-->
-            <i class="fa-solid fa-cart-shopping"></i>
+            <!-- TODO Still working with this litle guy-->
+            <a href="./cart.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
             <div class="cart_amount">0</div>
         </div>
     </div>
-    <div id="products" class="products grid">
-    </div>
-    <script src="main.js"></script>
+    <div id="products" class="products grid"></div>
+    <script src="./src/Data.js"></script>
+    <script src="./src/main.js"></script>
 </body>
 
 </html>
