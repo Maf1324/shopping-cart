@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styles Store - Cart</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="./src/styles.css">
+</head>
+
+<body>
+    <div class="navbar">
+        <h1><a href="/">Logo</a></h1>
+        <div class="cart" title="Working on it">
+            <a href="./cart.html">
+                <i class="fa-solid fa-cart-shopping"></i>
+            </a>
+            <div class="cart_amount"></div>
+        </div>
+    </div>
+    <div class="cart_manager grid">
+        <div id="shopping_cart" class="shopping_cart"></div>
+        <div id="label" class="flex">
+
+            <p>Total: $<span class="full_price">0,00</span></p>
+            <button type="button" class="finish_btn">Finish order</button>
+        </div>
+    </div>
+
+    <!-- <script src="./src/main.js"></script> -->
+    <script src="./src/Data.js"></script>
+    <script src="./src/cart.js"></script>
+</body>
+
+</html>
