@@ -1,6 +1,7 @@
 let label = document.getElementById("label")
 let shoppingCart = document.getElementById("shopping_cart")
 let basket = JSON.parse(localStorage.getItem("data")) || [];
+let finalPrice = document.querySelector('.full_price')
 
 let updateCartItens = ()=> {
   let cartAmount = document.querySelector('.cart_amount')
@@ -8,32 +9,41 @@ let updateCartItens = ()=> {
 }
 
 let generateItemCards = () => {
+    shoppingCart.innerHTML = ""
     if (basket.length > 0){
-        basket.map((prod)=> {
-            let search = data.find((e) => e.id === prod.id)
-            let {id,img, name, price} = search
-            // TODO Fix the position of the title and price
-            return shoppingCart.innerHTML += `
-            <div id="product-id-${id}" class="cart_item">
-                <div class="card_cover">
-                    <img class="item_img" src="${img}" alt="${img}">
-                </div>
-                    <div class="title_price">
-                        <h3 class="product_title">${name}</h3>
-                        <span class="price">$${price}</span>
+        basket.map((product)=> {
+            let {id:uniqID, item} = product
+            let uniqueProduct = data.find((i) => i.id === uniqID)
+            let {id, name, price, img} = uniqueProduct
+            shoppingCart.innerHTML += `
+            <div id="item-id-${id}" class="cart_item">
+                <img src="${img}" alt="${name}" title="${name}" class="cart_item_cover">
+                <div class="details">
+                    <div class="name_price_x">
+                        <div class="name_price">
+                            <span class="item_title">${name}</span>
+                            <span class="item_price">$ ${price}</span>
+                        </div>
+                        <i onclick="delet(${id})" class="fa-solid fa-x del_btn"></i>
                     </div>
                     <div class="buttons">
                         <i onclick="decrement(${id})" class="fa-solid fa-minus btn_minus"></i>
                         <span id="${id}" class="product_amount">
-                        ${prod.item === undefined? 0 : prod.item}
+                            ${item === undefined? 0 : item}
                         </span>
                         <i onclick="increment(${id})" class="fa-solid fa-plus btn_plus"></i>
                     </div>
+                    <h3>Subtotal(${item} itens): $
+                        <span class="subtotal">
+                            ${setSubTotal(product)}
+                        </span>
+                    </h3>
+                </div>
             </div>
-            `
+            `    
         })
         
-    }else {
+    } else {
         // label.innerHTML = ``
         shoppingCart.classList.add('empty_cart', 'flex')
         shoppingCart.innerHTML = `
@@ -43,9 +53,55 @@ let generateItemCards = () => {
         </a>
         `
     }
+    setFinalValue()
 }
 
-// TODO creat a new update function to change the final price of the order
+let setSubTotal = (basketProduct) => {
+    let {id, item} = basketProduct
+    let price = data.find((e) => e.id === id)
+    return price.price * item
+}
+
+let setFinalValue = () => {
+    price = 0
+    basket.map((e)=> {
+        let {id, item} = e
+        product = data.find((i) => i.id === id)
+        price += product.price * item
+    })
+    finalPrice.innerText = `${price}`
+}
+
+let decrement = (obj) => {
+    let search = basket.find(element => element.id === obj.id)
+    if (search === undefined || search.item === 0) return;
+    else {
+      search.item -= 1
+    }
+    handleUpdates()
+}
+
+let increment = (obj) => {
+    let search = basket.find(e => e.id === obj.id)
+    console.log(obj);
+    search.item += 1
+    obj.innerText = search.item
+    handleUpdates()
+}
+
+let delet = (obj) => {
+    let search = basket.find(element => element.id === obj.id)
+    search.item = 0
+    handleUpdates()
+}
+
+let handleUpdates = () => {
+    basket = basket.filter(e => e.item >0)
+    localStorage.setItem('data', JSON.stringify(basket))
+    updateCartItens()
+    setFinalValue()
+    generateItemCards()
+}
 
 updateCartItens()
 generateItemCards()
