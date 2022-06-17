@@ -2,6 +2,12 @@ let label = document.getElementById("label")
 let shoppingCart = document.getElementById("shopping_cart")
 let basket = JSON.parse(localStorage.getItem("data")) || [];
 let finalPrice = document.querySelector('.full_price')
+let manager = document.querySelector('#label')
+let clearBtn = document.querySelector('.clear_btn')
+
+clearBtn.addEventListener('click', (e)=> {
+    clear(e)
+})
 
 let updateCartItens = ()=> {
   let cartAmount = document.querySelector('.cart_amount')
@@ -42,7 +48,7 @@ let generateItemCards = () => {
             </div>
             `    
         })
-        
+        clearBtn.disabled = false;
     } else {
         // label.innerHTML = ``
         shoppingCart.classList.add('empty_cart', 'flex')
@@ -52,6 +58,7 @@ let generateItemCards = () => {
             <button type="button"class="home_btn">Continue shopping</button>
         </a>
         `
+        clearBtn.disabled = true
     }
     setFinalValue()
 }
@@ -83,7 +90,6 @@ let decrement = (obj) => {
 
 let increment = (obj) => {
     let search = basket.find(e => e.id === obj.id)
-    console.log(obj);
     search.item += 1
     obj.innerText = search.item
     handleUpdates()
@@ -95,8 +101,15 @@ let delet = (obj) => {
     handleUpdates()
 }
 
+let clear = (e) => {
+    basket.forEach(element => {
+        element.item = 0
+    });
+    handleUpdates()
+}
+
 let handleUpdates = () => {
-    basket = basket.filter(e => e.item >0)
+    basket = basket.filter(e => e.item > 0)
     localStorage.setItem('data', JSON.stringify(basket))
     updateCartItens()
     setFinalValue()
